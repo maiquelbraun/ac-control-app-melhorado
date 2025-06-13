@@ -1,0 +1,8 @@
+This directory is intended for project header files.
+
+A header file is a file containing C declarations and macro definitions
+to be shared between several project source files.
+
+Please note that this is different from your project include path,
+which you modify in PlatformIO settings:
+- Project settings -> Build -> Include directories

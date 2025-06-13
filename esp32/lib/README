@@ -1,0 +1,22 @@
+# Diretório de Bibliotecas Privadas
+
+Este diretório é destinado para bibliotecas específicas (privadas) do projeto.
+O PlatformIO irá compilá-las como bibliotecas estáticas e linkará ao executável final.
+
+Por exemplo:
+
+```
+lib/
+├── IR
+│   ├── src/
+│   │   └── IRSender.cpp
+│   └── include/
+│       └── IRSender.h
+└── MQTT
+    ├── src/
+    │   └── MQTTHandler.cpp
+    └── include/
+        └── MQTTHandler.h
+```
+
+Nota: Isto é diferente das dependências do projeto, que são gerenciadas no arquivo platformio.ini.

@@ -1,0 +1,40 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "terminal.integrated.env.windows": {
+            "PLATFORMIO_CALLER": "vscode"
+        },
+        "files.associations": {
+            "*.tcc": "cpp",
+            "array": "cpp",
+            "string": "cpp",
+            "string_view": "cpp",
+            "functional": "cpp",
+            "type_traits": "cpp",
+            "tuple": "cpp"
+        },
+        "C_Cpp.intelliSenseEngine": "default",
+        "C_Cpp.errorSquiggles": "enabled",
+        "C_Cpp.autocomplete": "default",
+        "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, IndentWidth: 4 }",
+        "editor.formatOnSave": true,
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+        "platformio-ide.useBuiltinPIOCore": true,
+        "platformio-ide.disablePIOHomeStartup": true,
+        "platformio-ide.activateOnlyOnPlatformIOProject": true
+    },
+    "extensions": {
+        "recommendations": [
+            "platformio.platformio-ide",
+            "ms-vscode.cpptools",
+            "twxs.cmake",
+            "ms-vscode.cmake-tools"
+        ]
+    }
+}
