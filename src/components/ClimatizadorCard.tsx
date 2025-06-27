@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { Button, Card, Slider } from '@/components/ui';
 import { 
-  ModoOperacao, 
-  VelocidadeVentilador, 
   ClimatizadorUI 
 } from '@/types/climatizador';
 import { useMQTTContext } from './MqttProvider';

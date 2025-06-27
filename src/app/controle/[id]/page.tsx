@@ -50,7 +50,7 @@ export default function ControlePage() {
       if (data.temperaturaDesejada) {
         setNovaTemperatura(data.temperaturaDesejada);
       }
-    } catch (e: any) {
+    } catch (e: Error) {
       setError(e.message);
       console.error("Falha ao buscar climatizador:", e);
     } finally {
@@ -60,9 +60,9 @@ export default function ControlePage() {
 
   useEffect(() => {
     fetchClimatizador();
-  }, [climatizadorId]);
+  }, [climatizadorId, fetchClimatizador]);
 
-  const enviarComando = async (acao: AcaoComando, valor?: any) => {
+  const enviarComando = async (acao: AcaoComando, valor?: string | number | boolean | ModoOperacaoClimatizador | VelocidadeVentiladorClimatizador) => {
     setComandoStatus("Enviando comando...");
     setError(null);
     try {
@@ -79,7 +79,7 @@ export default function ControlePage() {
       // Re-buscar dados do climatizador para refletir o novo estado
       await fetchClimatizador(); 
       setTimeout(() => setComandoStatus(null), 3000);
-    } catch (e: any) {
+    } catch (e: Error) {
       setError(e.message);
       setComandoStatus(null);
       console.error("Falha ao enviar comando:", e);

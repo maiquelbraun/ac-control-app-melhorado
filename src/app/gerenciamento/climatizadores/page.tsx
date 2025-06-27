@@ -11,7 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
-import { Climatizador, ClimatizadorUI, ModoOperacao, VelocidadeVentilador, isModoOperacao, isVelocidadeVentilador, toClimatizadorUI } from '@/types/climatizador';
+import { Climatizador, isModoOperacao, isVelocidadeVentilador, toClimatizadorUI } from '@/types/climatizador';
 
 const ClimatizadorCard = dynamic(
   () => import('@/components/ClimatizadorCard').then(mod => mod.ClimatizadorCard), 
@@ -44,14 +44,14 @@ export default function ClimatizadoresPage() {
       } else {
         setError('Resposta inválida do servidor');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       const errorDetails = {
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack,
-        status: error?.status,
-        statusText: error?.statusText,
-        ...(error?.response && { response: error.response }),
+        name: (error as Error)?.name,
+        message: (error as Error)?.message,
+        stack: (error as Error)?.stack,
+        status: (error as { status?: number })?.status,
+        statusText: (error as { statusText?: string })?.statusText,
+        ...((error as { response?: unknown })?.response && { response: (error as { response: unknown }).response }),
       };
       
       console.error('Erro detalhado ao carregar climatizadores:', errorDetails);
@@ -292,7 +292,7 @@ export default function ClimatizadoresPage() {
                     } else {
                       throw new Error(message);
                     }
-                  } catch (error: any) {
+                  } catch (error: Error) {
                     console.error('Erro ao editar climatizador:', error);
                     throw error;
                   }
@@ -312,7 +312,7 @@ export default function ClimatizadoresPage() {
                     } else {
                       throw new Error(message);
                     }
-                  } catch (error: any) {
+                  } catch (error: Error) {
                     console.error('Erro ao excluir climatizador:', error);
                     throw error;
                   }

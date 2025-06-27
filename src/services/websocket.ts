@@ -23,7 +23,7 @@ interface WebSocketStore {
 const MAX_RECONNECT_ATTEMPTS = 5;
 const RECONNECT_INTERVAL = 5000;
 
-type WebSocketStoreCreator = StateCreator<WebSocketStore>;
+
 
 export const useWebSocket = create<WebSocketStore>((set, get): WebSocketStore => ({
   socket: null,

@@ -11,7 +11,6 @@ import {
   Slider,
   TextField,
   Button,
-  Divider,
   Alert,
   Snackbar,
   FormControlLabel,

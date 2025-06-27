@@ -1,4 +1,4 @@
-import mqtt, { IClientOptions, MqttClient, ISubscriptionGrant, Packet, ClientSubscribeCallback } from 'mqtt';
+import mqtt, { IClientOptions, MqttClient, ClientSubscribeCallback } from 'mqtt';
 import { logger } from '@/lib/logger';
 import { EventEmitter } from 'events';
 

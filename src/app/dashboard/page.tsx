@@ -6,13 +6,10 @@ import {
   Typography,
   Box,
   Paper,
-  Grid as MuiGrid,
   CircularProgress,
   Card,
   CardContent,
   IconButton,
-  Alert,
-  Snackbar,
 } from '@mui/material';
 import { useWebSocket } from '@/services/websocket';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';

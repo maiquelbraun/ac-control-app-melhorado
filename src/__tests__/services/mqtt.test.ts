@@ -1,3 +1,4 @@
+import mqtt, { MqttClient } from 'mqtt'
 import mqttService from '@/services/mqtt'
 import { EventEmitter } from 'events'
 
@@ -7,13 +8,13 @@ jest.mock('mqtt', () => ({
 }))
 
 describe('MQTTService', () => {
-  let mockClient: any
+  let mockClient: MqttClient
 
   beforeEach(() => {
     jest.clearAllMocks()
     
     // Mock do cliente MQTT
-    mockClient = new EventEmitter()
+    mockClient = new EventEmitter() as MqttClient
     mockClient.connected = false
     mockClient.end = jest.fn()
     mockClient.subscribe = jest.fn()
@@ -57,8 +58,6 @@ describe('MQTTService', () => {
     })
 
     it('deve usar configurações padrão quando não especificadas', async () => {
-      const mqtt = require('mqtt')
-      
       mqttService.connect()
 
       expect(mqtt.connect).toHaveBeenCalledWith(
@@ -214,4 +213,5 @@ describe('MQTTService', () => {
     })
   })
 })
+
 

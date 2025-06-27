@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import prisma from '@/lib/prisma';
 import { withErrorHandler } from '@/lib/api/middleware';
 import { AppError, ValidationError, NotFoundError } from '@/lib/errors';

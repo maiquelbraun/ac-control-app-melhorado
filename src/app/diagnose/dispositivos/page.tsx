@@ -6,7 +6,6 @@ import {
   CardContent,
   Typography,
   Chip,
-  CircularProgress,
 } from '@mui/material';
 import ErrorMessage from '@/components/ErrorMessage';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -63,7 +62,7 @@ function DispositivosContent() {
     if (isConnected) {
       fetchDispositivos();
     }
-  }, [isConnected, deviceStatuses]);
+  }, [isConnected, deviceStatuses, fetchDispositivos]);
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage message={error} />;

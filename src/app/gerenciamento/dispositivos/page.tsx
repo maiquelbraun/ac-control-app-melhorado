@@ -23,7 +23,7 @@ export default function GerenciamentoDispositivosPage() {
       if (!response.ok) throw new Error(`Erro ao buscar dispositivos: ${response.statusText}`);
       const data = await response.json();
       setDispositivos(data);
-    } catch (e: any) {
+    } catch (e: Error) {
       setError(e.message);
       console.error("Falha ao buscar dispositivos:", e);
     } finally {
@@ -65,7 +65,7 @@ export default function GerenciamentoDispositivosPage() {
       setNovoDispositivo({ idEsp32: '', modeloEsp32: '', firmwareVersion: '' }); // Limpa o formulário
       setSuccessMessage(`Dispositivo "${dispositivoCriado.idEsp32}" criado com sucesso!`);
       setTimeout(() => setSuccessMessage(null), 3000);
-    } catch (e: any) {
+    } catch (e: Error) {
       setError(e.message);
       console.error("Falha ao criar dispositivo:", e);
     }

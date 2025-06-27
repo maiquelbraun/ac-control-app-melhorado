@@ -30,7 +30,7 @@ export default function GerenciamentoBlocosPage() {
       }
       const data = await response.json();
       setBlocos(data);
-    } catch (e: any) {
+    } catch (e: Error) {
       setError(e.message);
       console.error("Falha ao buscar blocos:", e);
     } finally {
@@ -68,7 +68,7 @@ export default function GerenciamentoBlocosPage() {
       setNomeNovoBloco('');
       setSuccessMessage(`Bloco "${blocoCriado.nome}" criado com sucesso!`);
       setTimeout(() => setSuccessMessage(null), 3000);
-    } catch (e: any) {
+    } catch (e: Error) {
       setError(e.message);
       console.error("Falha ao criar bloco:", e);
     }
