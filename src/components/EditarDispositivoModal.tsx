@@ -43,7 +43,7 @@ export default function EditarDispositivoModal({
         modeloEsp32: modelo || undefined,
       });
       handleClose();
-    } catch (error: any) {
+    } catch (error: Error) {
       setError(error.message || 'Erro ao salvar dispositivo');
     } finally {
       setLoading(false);

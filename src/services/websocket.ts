@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { logger } from '@/lib/logger';
 import { ConnectionError } from '@/lib/errors';
-import { StateCreator } from 'zustand';
+
 
 interface WebSocketStore {
   socket: WebSocket | null;

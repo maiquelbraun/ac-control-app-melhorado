@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
+import { getServerSession, Session } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
 export async function withAuth(
-  handler: (req: NextRequest, session: any) => Promise<NextResponse>,
+  handler: (req: NextRequest, session: Session) => Promise<NextResponse>,
   requiredRoles?: string[]
 ) {
   return async (req: NextRequest) => {

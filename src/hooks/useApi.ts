@@ -10,7 +10,7 @@ interface ApiResponse<T> {
 }
 
 interface UseApiOptions {
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: T) => void;
   onError?: (error: Error) => void;
 }
 
@@ -33,7 +33,7 @@ export function useApi<T>(options: UseApiOptions = {}) {
         throw new Error(result.message || 'Erro desconhecido');
       }
 
-      setData(result.data as any);
+      setData(result.data);
       options.onSuccess?.(result.data);
       return result.data || null;
 
@@ -41,9 +41,7 @@ export function useApi<T>(options: UseApiOptions = {}) {
       const error = err as Error;
       logger.error('API request failed:', error);
       
-      const errorMessage = isAppError(error)
-        ? error.message
-        : 'Ocorreu um erro na requisição';
+      
 
       setError(error);
       options.onError?.(error);

@@ -4,7 +4,7 @@ interface LogMessage {
   timestamp: string;
   level: LogLevel;
   message: string;
-  data?: any;
+  data?: unknown;
 }
 
 class Logger {
@@ -21,7 +21,7 @@ class Logger {
     return Logger.instance;
   }
 
-  private log(level: LogLevel, message: string, ...data: any[]) {
+  private log(level: LogLevel, message: string, ...data: unknown[]) {
     const logMessage: LogMessage = {
       timestamp: new Date().toISOString(),
       level,
@@ -61,19 +61,19 @@ class Logger {
     }
   }
 
-  public info(message: string, ...data: any[]) {
+  public info(message: string, ...data: unknown[]) {
     this.log('info', message, ...data);
   }
 
-  public warn(message: string, ...data: any[]) {
+  public warn(message: string, ...data: unknown[]) {
     this.log('warn', message, ...data);
   }
 
-  public error(message: string, ...data: any[]) {
+  public error(message: string, ...data: unknown[]) {
     this.log('error', message, ...data);
   }
 
-  public debug(message: string, ...data: any[]) {
+  public debug(message: string, ...data: unknown[]) {
     this.log('debug', message, ...data);
   }
 

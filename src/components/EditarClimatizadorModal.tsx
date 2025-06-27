@@ -45,7 +45,7 @@ export default function EditarClimatizadorModal({
         modelo: modelo || undefined,
       });
       handleClose();
-    } catch (error: any) {
+    } catch (error: Error) {
       setError(error.message || 'Erro ao salvar climatizador');
     } finally {
       setLoading(false);

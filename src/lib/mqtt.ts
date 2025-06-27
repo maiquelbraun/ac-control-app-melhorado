@@ -1,8 +1,5 @@
 // ac-control-app/src/lib/mqtt.ts
-import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
 
-const prisma = new PrismaClient();
 import mqtt from 'mqtt';
 
 let mqttClient: mqtt.Client;

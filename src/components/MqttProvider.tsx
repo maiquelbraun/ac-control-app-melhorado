@@ -8,7 +8,7 @@ interface DeviceStatus {
   temperaturaAtual?: number;
   error?: string;
   ultimaAtualizacao?: number;
-  [key: string]: any;
+  
 }
 
 interface MQTTContextType {

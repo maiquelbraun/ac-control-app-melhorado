@@ -83,7 +83,7 @@ export default function EditarSalaModal({
 
       await onSave(sala);
       handleClose();
-    } catch (error: any) {
+    } catch (error: Error) {
       console.error('Erro ao salvar sala:', error);
       setError(error.message || 'Erro ao salvar sala');
     } finally {

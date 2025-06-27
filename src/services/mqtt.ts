@@ -2,7 +2,7 @@ import mqtt, { IClientOptions, MqttClient, ClientSubscribeCallback } from 'mqtt'
 import { logger } from '@/lib/logger';
 import { EventEmitter } from 'events';
 
-type MQTTEvents = 'connected' | 'disconnected' | 'error' | 'message';
+
 
 interface MQTTServiceOptions {
   host?: string;
@@ -124,7 +124,7 @@ class MQTTService extends EventEmitter {
       throw new Error('Cliente MQTT não está conectado');
     }
     return new Promise((resolve, reject) => {
-      const callback: ClientSubscribeCallback = (err, granted) => {
+      const callback: ClientSubscribeCallback = (err) => {
         if (err) {
           reject(err);
         } else {
