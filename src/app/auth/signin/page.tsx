@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { signIn, getSession } from 'next-auth/react'
+import { useState, useEffect } from 'react'
+import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
   Container,
@@ -24,38 +24,46 @@ export default function SignInPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/'
-  const errorParam = searchParams.get('error')
+
+  useEffect(() => {
+    const error = searchParams.get('error');
+    if (error === 'CredentialsSignin') {
+      setError('Email ou senha inválidos.');
+    } else if (error === 'inactive') {
+      setError('Sua conta está inativa. Entre em contato com o administrador.');
+    } else if (error) {
+      setError('Ocorreu um erro desconhecido ao tentar fazer login.');
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-    try {
-      const result = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
-      })
+    console.log('Tentando fazer login com:', { email, password, callbackUrl });
 
-      if (result?.error) {
-        setError('Email ou senha inválidos')
-      } else {
-        // Verificar se a sessão foi criada corretamente
-        const session = await getSession()
-        if (session) {
-          router.push(callbackUrl)
-          router.refresh()
-        } else {
-          setError('Erro ao criar sessão')
-        }
-      }
-    } catch (error) {
-      setError('Erro interno do servidor')
-    } finally {
-      setLoading(false)
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+      callbackUrl,
+    });
+
+    console.log('Resultado completo do signIn:', result);
+
+    if (result?.ok) {
+      console.log('Login bem-sucedido, redirecionando para:', callbackUrl);
+      window.location.assign(callbackUrl);
+    } else if (result?.error) {
+      console.error('Erro no login:', result.error);
+      setError('Email ou senha inválidos.');
+    } else {
+      console.log('Resultado do signIn não é ok nem erro, assumindo falha.');
+      setError('Ocorreu um erro desconhecido ao tentar fazer login.');
     }
-  }
+    setLoading(false);
+  };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -82,12 +90,6 @@ export default function SignInPage() {
             <Typography component="h2" variant="h6" color="textSecondary" gutterBottom>
               Faça login para continuar
             </Typography>
-
-            {errorParam === 'inactive' && (
-              <Alert severity="warning" sx={{ width: '100%', mb: 2 }}>
-                Sua conta está inativa. Entre em contato com o administrador.
-              </Alert>
-            )}
 
             {error && (
               <Alert severity="error" sx={{ width: '100%', mb: 2 }}>

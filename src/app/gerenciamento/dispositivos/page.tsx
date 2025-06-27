@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, FormEvent } from 'react';
-import { DispositivoControle as DispositivoType } from '@prisma/client';
+import { DispositivoControle as DispositivoType } from '@/types/dispositivo';
 
 export default function GerenciamentoDispositivosPage() {
   const [dispositivos, setDispositivos] = useState<DispositivoType[]>([]);

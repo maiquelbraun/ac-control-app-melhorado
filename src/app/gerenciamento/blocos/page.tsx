@@ -2,11 +2,7 @@
 'use client';
 
 import { useState, useEffect, FormEvent } from 'react';
-import { Bloco as BlocoType } from '@prisma/client';
-
-interface BlocoComSalas extends BlocoType {
-  salas: { id: string; nome: string }[];
-}
+import { BlocoComSalas } from '@/types/bloco';
 
 export default function GerenciamentoBlocosPage() {
   const [blocos, setBlocos] = useState<BlocoComSalas[]>([]);
