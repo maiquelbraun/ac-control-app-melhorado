@@ -15,7 +15,7 @@ export default function RootClientLayout({ children }: RootClientLayoutProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MQTTProvider>
+      {/* <MQTTProvider> */}
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-grow bg-gray-50">
@@ -25,7 +25,7 @@ export default function RootClientLayout({ children }: RootClientLayoutProps) {
             © {new Date().getFullYear()} AC Control. Todos os direitos reservados.
           </footer>
         </div>
-      </MQTTProvider>
+      {/* </MQTTProvider> */}
     </ThemeProvider>
   );
 }

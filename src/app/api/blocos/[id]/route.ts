@@ -2,12 +2,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
+interface RouteContext {
+  params: {
+    id: string;
+  };
+}
+
 /**
  * PUT /api/blocos/:id
  * Atualiza o nome de um bloco específico pelo seu ID.
  */
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function PUT(request: NextRequest, context: RouteContext) {
+  const { id } = context.params;
   try {
     const body = await request.json();
     if (!body.nome || typeof body.nome !== 'string') {

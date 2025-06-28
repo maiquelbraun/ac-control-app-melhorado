@@ -14,7 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} font-sans`}>
+    <html lang="pt-BR" className={`${inter.variable} font-sans}`}>
+      <head>
+        <title>AC Control App</title>
+      </head>
       <body suppressHydrationWarning={true}>
         <RootClientLayout>{children}</RootClientLayout>
       </body>

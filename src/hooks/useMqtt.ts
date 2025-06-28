@@ -7,6 +7,7 @@ import { logger } from '@/lib/logger';
 interface MQTTSubscription {
   topic: string;
   callback: (message: string, topic: string) => void;
+  regex?: RegExp;
 }
 
 interface MQTTHookOptions {
@@ -53,6 +54,8 @@ export const useMqtt = (options: MQTTHookOptions = {}): MQTTHookReturn => {
 
       // Se há subscrições, registrá-las após a conexão
       options.subscriptions?.forEach(async (sub) => {
+        // Pre-compile regex for topic matching
+        sub.regex = new RegExp(sub.topic.replace(/\+/g, '[^/]+').replace(/#/g, '.*'));
         try {
           await mqttService.subscribe(sub.topic);
         } catch (error) {
@@ -73,7 +76,7 @@ export const useMqtt = (options: MQTTHookOptions = {}): MQTTHookReturn => {
 
     const handleMessage = (topic: string, message: string) => {
       options.subscriptions?.forEach(sub => {
-        if (topic.match(sub.topic.replace('+', '[^/]+'))) {
+        if (sub.regex?.test(topic)) { // Use pre-compiled regex
           sub.callback(message, topic);
         }
       });
@@ -98,6 +101,7 @@ export const useMqtt = (options: MQTTHookOptions = {}): MQTTHookReturn => {
       mqttService.removeListener('disconnected', handleDisconnect);
       mqttService.removeListener('error', handleError);
       mqttService.removeListener('message', handleMessage);
+      mqttService.disconnect();
     };
   }, [connect, options]);
 

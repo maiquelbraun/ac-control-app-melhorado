@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { signIn } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { signIn, getSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import {
   Container,
   Paper,
@@ -15,6 +15,12 @@ import {
 } from '@mui/material'
 import { LockOutlined } from '@mui/icons-material'
 
+// Função auxiliar para obter parâmetros da URL
+function getQueryParam(param: string): string | null {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
 export default function SignInPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,19 +28,11 @@ export default function SignInPage() {
   const [loading, setLoading] = useState(false)
   
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/'
+  const [callbackUrl, setCallbackUrl] = useState('/');
 
   useEffect(() => {
-    const error = searchParams.get('error');
-    if (error === 'CredentialsSignin') {
-      setError('Email ou senha inválidos.');
-    } else if (error === 'inactive') {
-      setError('Sua conta está inativa. Entre em contato com o administrador.');
-    } else if (error) {
-      setError('Ocorreu um erro desconhecido ao tentar fazer login.');
-    }
-  }, [searchParams]);
+    setCallbackUrl(getQueryParam('callbackUrl') || '/');
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,8 +51,15 @@ export default function SignInPage() {
     console.log('Resultado completo do signIn:', result);
 
     if (result?.ok) {
-      console.log('Login bem-sucedido, redirecionando para:', callbackUrl);
-      window.location.assign(callbackUrl);
+      console.log('Login bem-sucedido, aguardando sessão...');
+      const session = await getSession();
+      if (session) {
+        console.log('Sessão carregada, redirecionando para:', callbackUrl);
+        window.location.href = callbackUrl;
+      } else {
+        console.error('Sessão não carregada após login bem-sucedido.');
+        setError('Erro ao carregar sessão após login.');
+      }
     } else if (result?.error) {
       console.error('Erro no login:', result.error);
       setError('Email ou senha inválidos.');

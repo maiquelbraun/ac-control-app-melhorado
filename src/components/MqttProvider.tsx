@@ -33,6 +33,8 @@ interface MQTTProviderProps {
 
 export function MQTTProvider({ children }: MQTTProviderProps) {
   const [deviceStatuses, setDeviceStatuses] = useState<Record<string, DeviceStatus>>({});
+  const deviceStatusesRef = React.useRef<Record<string, DeviceStatus>>({});
+  const updateTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const { isConnected, error, publishCommand } = useMqtt({
     onConnect: () => {
       console.log('MQTT Conectado');
@@ -52,14 +54,24 @@ export function MQTTProvider({ children }: MQTTProviderProps) {
             const [, type, id] = topic.split('/');
             const deviceKey = `${type}/${id}`;
             
-            setDeviceStatuses(prev => ({
-              ...prev,
+            // Atualiza a referência imediatamente
+            deviceStatusesRef.current = {
+              ...deviceStatusesRef.current,
               [deviceKey]: {
-                ...prev[deviceKey],
+                ...deviceStatusesRef.current[deviceKey],
                 ...status,
                 ultimaAtualizacao: Date.now()
               }
-            }));
+            };
+
+            // Debounce a atualização do estado
+            if (updateTimeoutRef.current) {
+              clearTimeout(updateTimeoutRef.current);
+            }
+            updateTimeoutRef.current = setTimeout(() => {
+              setDeviceStatuses({ ...deviceStatusesRef.current });
+            }, 100); // Atraso de 100ms
+
           } catch (error) {
             console.error('Erro ao processar mensagem:', error);
           }

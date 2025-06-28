@@ -23,6 +23,12 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({
+  // NOTE: If "ARIA hidden element must not contain focusable elements" warning persists,
+  // investigate focus management and ensure elements outside the modal are
+  // properly inaccessible when the modal is open. Material-UI's Dialog
+  // should handle this by default, but conflicts can arise with custom
+  // focus traps or other libraries.
+
   open,
   onClose,
   title,
